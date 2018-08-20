@@ -13,7 +13,7 @@ pstree -apA
 echo "-------- parent ----------" && pmap $TEST_PID | grep anon
 
 (while true; do
-  ps -eo min_flt,maj_flt,cmd
+  ps -eo min_flt,maj_flt,%cpu,cmd
 done )&
 MON_PID=$!
 
