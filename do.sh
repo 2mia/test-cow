@@ -7,15 +7,15 @@ gcc -o test test.c
 ./test&
 TEST_PID=$!
 
-sleep 1
 pstree -apA
 
 echo "-------- parent ----------" && pmap $TEST_PID | grep anon
 
 (while true; do
-  ps -eo min_flt,maj_flt,%cpu,cmd
+  kill -0 $TEST_PID &> /dev/null || break
+  ps -eo min_flt,maj_flt,%cpu,rss,vsz,cmd
 done )&
-MON_PID=$!
+MON_PID=$! 
 
 # ./nginx-memuse $TEST_PID
 wait $TEST_PID
